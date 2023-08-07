@@ -33,6 +33,12 @@ async function run() {
     const coffeeCollection = database.collection("coffee");
 
     // API start
+    //Get all coffee API
+    app.get("/coffee", async (req, res) => {
+      const cursor = coffeeCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
 
     //Post coffee API
     app.post("/coffee", async (req, res) => {
