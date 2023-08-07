@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -46,6 +46,17 @@ async function run() {
       const result = await coffeeCollection.insertOne(data);
       res.send(result);
     });
+
+    //delete coffee API
+    app.delete("/coffee/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      // Query for a movie that has title "Annie Hall"
+      const query = { _id: new ObjectId(id) };
+      const result = await coffeeCollection.deleteOne(query);
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
