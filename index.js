@@ -56,6 +56,36 @@ async function run() {
       res.send(result);
     });
 
+    //PUT->Update coffee API
+    app.put("/coffee/:id", async (req, res) => {
+      const id = req.params.id;
+      const data = req.body;
+      // create a filter for a coffee to update
+      const filter = { _id: new ObjectId(id) };
+      // this option instructs the method to create a document if no documents match the filter
+      const options = { upsert: true };
+      // create a document that sets the plot of the movie
+      const updateCoffee = {
+        $set: {
+          coffeeName: data.coffeeName,
+          availableQuantity: data.availableQuantity,
+          supplierName: data.supplierName,
+          taste: data.taste,
+          category: data.category,
+          details: data.details,
+          price: data.price,
+          photoUrl: data.photoUrl,
+        },
+      };
+
+      const result = await coffeeCollection.updateOne(
+        filter,
+        updateCoffee,
+        options
+      );
+      res.send(result);
+    });
+
     //delete coffee API
     app.delete("/coffee/:id", async (req, res) => {
       const id = req.params.id;
