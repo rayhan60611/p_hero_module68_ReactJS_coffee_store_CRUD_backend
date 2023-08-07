@@ -40,6 +40,15 @@ async function run() {
       res.send(result);
     });
 
+    //Get a single coffee API
+    app.get("/coffee/:id", async (req, res) => {
+      const id = req.params.id;
+      // Query for a movie that has the title 'The Room'
+      const query = { _id: new ObjectId(id) };
+      const result = await coffeeCollection.findOne(query);
+      res.send(result);
+    });
+
     //Post coffee API
     app.post("/coffee", async (req, res) => {
       const data = req.body;
